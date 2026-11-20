@@ -1,0 +1,545 @@
+  
+
+ --[[
+
+PROGRAM NAME:	KPOP
+VERSION:		3.32b
+AUTHOR:			*SANDRINO*  9/2026
+
+This file was created by *Sandrino*
+
+	*K-Pop Demon Hunter* is the hit Netflix animated series that has generated millions in revenue. 
+         This project came about thanks to my 8-year-old daughter who, like millions of other children 
+         around the world, loves the show. I created this game almost as a hobby—it certainly 
+          isn't perfect... Thank you to everyone who downloads and plays it.
+
+
+	
+
+]]--
+
+-- Hypseus Game Setup --
+
+-- Do Not Remove/Alter these --
+OVERLAY_DEFAULT  = 0
+OVERLAY_FULL     = 1
+OVERLAY_HALF     = 2
+OVERLAY_OVERSIZE = 3
+-- Do Not Remove/Alter these --
+
+
+BASEDIR = "singe2"                         -- This should be 'singe'
+
+BASEOVERLAY = OVERLAY_DEFAULT                -- Set the default Overlay
+
+MYDIR = BASEDIR .."/".. "kpop"         -- This is the directory where your game is
+
+MovieFPS = 25.000 -- Number of frames per second of your movies (used for timed actions).
+
+dip_MinimalOverlay = 0  -- Enable the Minimal Overlay on startup (SBC's)
+
+-- End Hypseus Game Setup --
+
+dofile(BASEDIR .. "/FrameworkKpop/globals.singe")    -- Don't touch this line
+
+-- Ispirato da Mad Dog 2: variabile grafica dedicata e indipendente
+sprVetro = spriteLoad(MYDIR .. "/Overlay/vetrorotto.png")
+sprPiu = spriteLoad(MYDIR .. "/Overlay/piu.png")
+
+
+dip_Difficulty = 1       -- Forza la difficoltà su NORMAL per attivare i timer
+dip_ShowAction = 3       -- FORZA IL VALORE SU 3 PER ACCENDERE I NUMERI DEL CONTO ALLA ROVESCIA
+dip_GameType = 0         -- Imposta la modalità di gioco standard
+
+
+-- Parametri di sicurezza
+SCOREMOVE = 700                                   
+BUFFMOVE = 300                                    
+SCORESCENE = 10000                                
+DEATHPENALTY =1000                               
+SCORELEVEL =50000                               
+SCOREGAME =250000                                   
+PERFECTBONUS =10000                            
+EXTRALIFE = 0                                    
+SCORESECRET = 1 
+
+PenalNormal = 0									
+PenalHard = 2									
+PenalExtreme  = 4   
+
+altCfg = false                                                                            
+miscR = 153                                   
+miscG = 76                                   
+miscB = 0
+
+AllowRandom = false 
+                                   
+AllowTier = false 
+Tiers[0] = {4,4,4,5,3}							-- Tier 0 = init. First number is number of Tiers, followed by size of each Tier
+Tiers[1] = {1,2,3,4}							-- Levels to be mixed in Tier 1 (and so on).
+Tiers[2] = {5,6,7,8}							-- In this example there are 17 levels Tiered in 4 groups	
+Tiers[3] = {9,10,11,12,13}
+Tiers[4] = {14,15,16}							-- Level 17 is played last. Not included in any Tier.
+
+                                   
+AllowMap = false
+MapStart = 0
+                                    
+IngameDiffchoice = true
+   
+BarSize = 10	
+BarMin = 2		
+BarBonus = 3	
+
+LvlTrophy3 = 0
+LvlTrophy4 = 0  
+
+offsetTitle = 0
+offsetTitleend = offsetTitle + 750
+
+offsetIntro01 = 1
+offsetIntro01end = offsetIntro01 + 628
+
+offsetIntro02 = 129800			
+offsetIntro02end = offsetIntro02 + 144
+
+offsetIntro03 = 773							
+offsetIntro03end = offsetIntro03 +3803
+ 
+offsetMenus = 129941																		
+											
+frameOptions = offsetMenus +50
+frameVictory = offsetMenus +55  					
+frameSave = offsetMenus +60					
+frameRankings =offsetMenus +70				
+frameControls = offsetMenus +75
+frameSpecial = offsetMenus +80			
+frameSecret = offsetMenus +90
+frameTrophy = offsetMenus +100
+frameHints = offsetMenus +120
+
+
+frameEasy = 134700  
+frameNormal = 134850  
+frameHard = 135000  
+frameExtreme = 135150   
+
+offsetGameOver = offsetMenus -4058				
+offsetGameOverend = offsetMenus -3723
+offsetGameOverAlt = offsetMenus +500			
+offsetGameOverAltend = offsetMenus +500		
+
+offsetNewHScore = offsetMenus +500				
+offsetNewHScoreend = offsetMenus +500		
+
+offsetEnterHScore = offsetMenus +500		
+offsetEnterHScoreend = offsetMenus +500		
+
+offsetRankings = offsetMenus +500		
+offsetRankingsend = offsetMenus +500
+
+offsetContinue = offsetMenus -4528				
+offsetContinueend = offsetMenus -4110		
+
+offsetClear = offsetMenus -75100					
+offsetClearend = offsetMenus -74625
+
+offsetGetReady = 0							
+offsetGetReadyEnd = 1						
+
+offsetSupDeath = 0							
+offsetSupDeathEnd = 1					
+
+offsetMap = offsetMenus +1						
+offsetMapend = offsetMenus +1
+
+offsetMovieEnd = 129789
+
+
+-- Death frames --
+
+totalDeath = 9									-- Total number of death scenes.
+offsetDeath = 140000
+						-- Start frame for the death video.
+
+Death[1] = {offsetDeath + 0, offsetDeath +49}
+Death[2] = {offsetDeath + 50, offsetDeath +99}
+Death[3] = {offsetDeath + 100, offsetDeath +149}
+Death[4] = {offsetDeath + 150, offsetDeath +199}
+Death[5] = {offsetDeath + 200, offsetDeath +249}
+Death[6] = {offsetDeath + 250, offsetDeath +299}
+Death[7] = {offsetDeath + 300, offsetDeath +349}
+Death[8] = {offsetDeath + 350, offsetDeath +399}
+Death[9] = {offsetDeath + 400, offsetDeath +499}
+
+----------------------------------------------------------------------------------------------------
+-- List of Levels (Title, Start Frame, End of Intro Clip, Total Scenes, Mirror, Death Mirror.) --
+----------------------------------------------------------------------------------------------------
+
+
+
+
+finalstage = 6                            -- Impostato a 2 livelli totali
+PlayOrder = {1,2,3,4,5,6}                         -- Specifica l'ordine di gioco
+AllowSecret = false 
+RelativeFrames = true  
+
+Level[1] = {"PLANE", 4584, 12186, 2, 0, 0, -1}
+Level[2] = {"SAUNA", 12285,49147, 4, 0, 0, -1}
+Level[3] = {"DERPY",49200, 62000, 3, 0, 0, -1}
+Level[4] = {"TRAIN",62147, 90723, 2, 0, 0, -1}
+Level[5] = {"THE SHOW BEGINS",82346, 125013, 5, 0, 0, -1}
+Level[6] = {"FINALE",126669, 129790, 1, 0, 0, -1}
+
+function setupMoves(thisLevel, thisScene)
+
+               if thisLevel == 1 then 
+                   
+                         offsetClear = 12194
+		        offsetClearend = 12214 								
+															
+		if thisScene == 1 then 							
+
+			sceneStart = 3129						
+			sceneEnd   = 4000							
+			totalMoves   = 9
+										
+				 	
+			move[1] = {3521, 3545, ACT2ACT3,0}							
+			move[2] = {3627, 3638, LOOPUQC,0}		
+			move[3] = {3663, 3676, UP, 0}
+			move[4] = {3678, 3698, RIGHT, 0}			
+			move[5] = {3720, 3740, LOOPLHCC, 0}		       		        
+	                move[6] = {3771, 3814, MASH2MAX, 0}
+		        move[7] = {3842, 3852, LEFT, 0}
+		        move[8] = {3867, 3877, LEFT, 0}
+                        move[9] = {3930, 3950, ACT2UP, 0}			
+									
+		
+	        elseif thisScene == 2 then 	
+	                
+	                sceneStart = 4001						
+			sceneEnd   = 7591
+			totalMoves   = 10
+
+	                move[1] = {4100, 4950, SKIP, 0}	
+			move[2] = {5073, 5103, MASHMAX, 0}
+                        move[3] = {5450, 5470, HOLDDOWN, 0}
+	                move[4] = {5540, 5550, LEFT, 0}
+                        move[5] = {5799, 5810, DOWNLEFT, 0}
+                        move[6] = {5880, 6100, MASHMAX, 0}
+                        move[7] = {6134, 6147, ACT3DOWN, 0}
+                        move[8] = {6278, 6288, LEFT, 0}
+                        move[9] = {6438, 6450, ACT2ACT3, 0}
+                        move[10] = {6460, 7532, SKIP, 0}
+	   				       
+	    end
+		 
+               elseif thisLevel == 2 then
+
+			offsetClear = 34185
+		        offsetClearend = 34358				
+		
+	      if thisScene == 1 then   										
+
+			
+			sceneStart =4100
+			sceneEnd   = 33600
+			totalMoves   = 10
+                        
+			move[1] = { 0, 4150, SKIP, 0}		
+			move[2] = {4250, 6403, SKIP, 0}
+		        move[3] = {6865, 6934, HOLDUP, 0}
+		        move[4] = {6999, 7079, HOLDUP, 0}
+                        move[5] = {7407, 19228, SKIP, 0}
+                        move[6] = {19517, 22994, SKIP, 0}
+                        move[7] = {23090, 23100, DOWN, 0}
+                        move[8] = {23778, 23830, MASHMAX, 0}
+                        move[9] = {24178, 24188, ACTUP, 0}
+                        move[10] = {24531, 33502, SKIP, 0}
+                       
+              elseif thisScene == 2 then
+                       
+                        sceneStart = 33601
+			sceneEnd   = 34780
+			totalMoves   = 6
+
+
+			 move[1] = {34542, 34552, RIGHT, 0}
+                         move[2] = {34565, 34577, LEFT, 0}
+			move[3] = {34593, 34603, RIGHT, 0}
+			move[4] = {34607, 34625, RIGHT, 0}                       
+			move[5] = {34644, 34666, ACTDOWN, 0}
+                        move[6] = {34747, 34760, LOOPLHCC, 0}
+
+               elseif thisScene == 3 then 
+
+                        sceneStart = 34781
+			sceneEnd   = 35672
+			totalMoves   = 7
+
+
+			move[1] = {34865, 34875, BUTTON3, 0}
+			move[2] = {34877, 34890, RIGHT, 0}
+			move[3] = {34907, 34920, RIGHT, 0}
+			move[4] = {35178, 35190, RIGHT, 0}
+			move[5] = {35263, 35283, LEFT, 0}
+                        move[6] = {35349, 35364, RIGHT, 0}
+			move[7] = {35401, 35579, MASHMAX, 0}
+			
+
+                 elseif thisScene == 4 then 
+
+                        sceneStart = 35673
+			sceneEnd   = 36851
+			totalMoves   = 5
+
+
+			move[1] = {36274, 36294, ACTLEFT, 0}
+                        move[2] = {36325, 36362, RUNMAX, 0}
+                        move[3] = {36373, 36382, DOWN, 0}
+			move[4] = {36523, 36543, DOWNLEFT, 0}
+			move[5] = {36621, 36641, ACT3DOWN, 0}
+		
+			
+	       end
+
+                elseif thisLevel == 3 then
+
+                         offsetClear = 54863
+		         offsetClearend = 55028
+
+                         
+
+		if thisScene == 1 then
+
+			sceneStart = 158
+			sceneEnd   = 1710
+			totalMoves   = 4
+			
+			
+			move[1] = {393, 408, HOLDDOWN, 0}
+		        move[2] = {604, 630, MULTI, 0,"B1,B1,B1,B1"}
+                        move[3] = {809, 821, ACT2DOWN, 0}
+		        move[4] = {1060, 1706, SKIP, 0} 
+
+                 elseif thisScene == 2 then 	
+	                
+	                sceneStart = 1711							
+			sceneEnd   = 7820
+			totalMoves   = 3
+
+                        move[1] = {2276, 2320, MASH, 0}
+                        move[1][5] = BUTTON3
+                        move[2] = {2417, 5081, SKIP, 1}
+		        move[3] = {5160, 7814, SKIP, 1}
+
+                  elseif thisScene == 3 then 	
+	                
+	                sceneStart = 7821							
+			sceneEnd   = 12944
+			totalMoves   = 16
+
+                        move[1] = {7915, 7935, LEFT,0}
+                        move[2] = {7940, 7950, UP,0}
+                        move[3] = {7981, 8000, UP,0}
+                        move[4] = {8020, 8036, ACTDOWN, 0}  
+                        move[5] = {8226, 8256, LOOPRHC, 0}
+                        move[6] = {8450, 8475, LOOPLHCC, 0}
+                        move[7] = {8565, 8575, RIGHT, 0}
+                        move[8] = {8579, 8589, RIGHT, 0}                      
+                        move[9] = {8593, 8603, DOWN, 0}
+                        move[10] = {8927, 8937, DOWN,0,}
+                        move[11] = {8949, 8961, DOWN,0,}
+                        move[12] = {8991, 9006, LOOPRHC,0}
+                        move[13] = {9011, 9024, DOWN,0}
+                        move[14] = {9194, 11988, SKIP, 0}
+                        move[15] = {11990, 12380, 0}
+                        move[16] = {12485, 12770, CHOOSE, 5}
+                        choice[1] = { "RUMI LO LASCIA ANDARE", false, 0 }
+			choice[2] = { "RUMI LO COLPISCE CON LA SPADA", false, 0}
+			choice[3] = { "GINO SVANISCE CON UNA FUMATA", true,0 }
+                        choice[4] = { "RUMI LO SPINGE GIU'DAL TETTO", false, 0}
+			choice[5] = { "GINO PRENDE RUMI E LA TELETRASPORTA ALL'INFERNO", false,0 }
+
+
+                end 
+
+                    elseif thisLevel == 4 then
+
+			   offsetClear = 12544
+		        offsetClearend = 12767				
+		
+		if thisScene == 1 then   										
+
+			sceneStart = 1538
+			sceneEnd   = 2523
+			totalMoves   = 5
+					
+			
+		        move[1] = {1683, 1703 , ACTDOWN, 0}			
+			move[2] = {1736, 1775, MASHMAX, 0}
+                        move[3] = {1810, 1825, LOOPLHCC, 0}
+	                move[4] = {2091, 2111, ACTACT2, 0}
+                        move[5] = {2409, 2429, ACT2DOWN, 0}
+                       		 		 
+                       
+              elseif thisScene == 2 then
+                       
+                        sceneStart = 2524
+			sceneEnd   = 20016
+			totalMoves   = 17
+			
+			move[1] = {2938, 2968, LOOPLHCC, 0}
+			move[2] = {3169, 16667, SKIP, 0}
+                        move[3] = {17118, 17138, ACT2DOWN, 0}
+                        move[4] = {17150, 17169, LOOPRQC, 0}
+                        move[5] = {17220, 17240, LOOPDQCC, 0}
+                        move[6] = {17252, 17265, LOOPDQC, 0}
+                        move[7] = {17275, 17285, LOOPDQCC, 0}
+                        move[8] = {17551, 17571, LOOPRQC, 0}
+                        move[9] = {18136, 18186, HOLDRIGHT, 0}
+                        move[10] = {18261, 18281, ACTRIGHT, 0}
+                        move[11] = {18290, 18305, LOOPRHC, 0}
+                        move[12] = {18395, 18415, ACTDOWN, 0}
+                        move[13] = {18455, 18494, RUNMAX, 0}
+                        move[14] = {18495, 18510, LOOPRHC, 0}
+                        move[15] = {18720, 18735, ACT2DOWN, 0}
+                        move[16] = {18962, 18977, UPRIGHT, 0}
+			move[17] = {19020, 19040, ACTDOWN, 0}		
+                        
+		 end							
+	  
+                  elseif thisLevel == 5 then
+
+			  offsetClear = 90732
+		        offsetClearend = 90899			
+		
+		if thisScene == 1 then   										
+
+			sceneStart = 6517
+			sceneEnd   = 14069
+			totalMoves   = 5
+					
+			
+		        move[1] = {6630, 6660 ,HOLDDOWN, 0}			
+			move[2] = {6700, 11592 ,SKIP, 0}
+                        move[3] = {11666, 11728 , 0}
+                        move[4] = {11730, 12047 ,CHOOSE, 4}                        
+                        choice[1] = { "LA LUNA SCOPPIA", false, 0 }
+			choice[2] = { "LA LUNA DIVENTA UN SOLE", false, 0}
+			choice[3] = { "LA LUNA SBATTE CONTRO UN VETRO", true,0 }
+                        choice[4] = { "LA LUNA SI TRASFORMA IN FARFALLA", false,0 }
+                         move[5] = {12252, 13837 ,SKIP, 0}
+
+                   elseif thisScene == 2 then 	
+	                
+	                sceneStart = 14070						
+			sceneEnd   = 18500
+			totalMoves   = 15
+
+
+                        move[1] = {14110, 14836 ,SKIP, 0}
+                        move[2] = {15684, 15704 ,LOOPLHCC, 0}  
+                        move[3] = {15785, 15805 ,LOOPRHC, 0}
+                        move[4] = {15888, 15913 ,LOOPRC, 0}
+                        move[5] = {15926, 15950 ,LOOPRC, 0}
+                        move[6] = {16176, 16190 ,HOLDDOWN, 0}
+                        move[7] = {16200, 16450 , 0} 
+                        move[8] = {16480, 16912 ,CHOOSE, 5}
+                         choice[1] = { "RUMI VIENE ATTACCATA DAI DEMONI", false, 0 }
+			 choice[2] = { "UN ESPLOSIONE SPAVENTA TUTTI", false, 0}
+			 choice[3] = { "UNA COPIA DI ZOEY E MIRA APPARE DIETRO RUMI", true,0 }
+                         choice[4] = { "SI ACCENDE LA LUCE E LO SPETTACOLO CONTINUA", false, 0}
+			 choice[5] = { "GINO APPARE DAVANTI A RUMI ", false,0 }
+                        move[9] = {17138, 17151 ,LEFT, 0}
+                        move[10] = {17184, 17199 ,RIGHT, 0}
+                        move[11] = {17515, 17530 ,HOLDLEFT, 0}
+                        move[12] = {17656, 17676 ,MASHMAX, 0}
+                        move[13] = {18210, 18335,MASH, 0,BUTTON2}
+                        move[14] = {18330, 18348 ,MULTI, 0,"B1,B1,B1,B1"}
+                        move[15] = {18380, 18398 ,MULTI, 0,"B2,B2,B2,B2"}
+ 
+                  elseif thisScene == 3 then 	
+	                
+	                sceneStart = 18501						
+			sceneEnd   = 33657
+			totalMoves   = 8
+
+                      move[1] = {18600, 20650 ,SKIP, 0}
+                      move[2] = {21038, 21122 ,RUNMAX, 0}
+                      move[3] = {21125, 21130, 0}
+                      move[4] = {21133, 21388 ,CHOOSE, 4}
+                        choice[1] = { "ZOEY MIRA E GINO ATTACCANO RUMI", false, 0 }
+			choice[2] = { "GINO COLPISCE ZOEY E MIRA", false, 0}
+			choice[3] = { "MIRA ZOEY e GINO SVANISCONO", false,0 }
+                        choice[4] = { "GINO TRASFORMA ZOEY E MIRA IN DEMONI", true,0 }
+                      move[5] = {21430, 21450 ,ACT2LEFT, 0}
+                      move[6] = {21588, 25652 ,SKIP, 0}
+                      move[7] = {25825, 29718 ,SKIP, 0}
+                      move[8] = {29916, 33587 ,SKIP, 0} 
+
+                     elseif thisScene == 4 then 	
+	                
+	                sceneStart = 33658						
+			sceneEnd   = 37475
+			totalMoves   = 9
+            
+                     move[1] = {33763, 36399 ,SKIP, 0}
+                     move[2] = {36795, 36810 ,LOOPRHC, 0}
+                     move[3] = {36940, 36956 ,LOOPDHCC, 0}
+                     move[4] = {36968, 36983 ,UPLEFT, 0}
+                     move[5] = {36995, 37010 ,UPRIGHT, 0}
+                     move[6] = {37050, 37070 ,LOOPLHCC, 0}
+                     move[7] = {37128, 37143 ,ACTRIGHT, 0}
+                     move[8] = {37170, 37182 ,ACT2DOWN, 0}
+                     move[9] = {37224, 37400 ,MASH, 0,BUTTON3}
+
+
+                   elseif thisScene == 5 then 	
+	                
+	                sceneStart = 37476						
+			sceneEnd   = 42660
+			totalMoves   = 17
+
+                    move[1] = {38297, 38345 ,MASH, 0,BUTTON2}
+                    move[2] = {38340, 38355 ,RIGHT, 0} 
+                    move[3] = {38358, 38373 ,RIGHT, 0}
+                    move[4] = {38681, 38800 ,MASHMAX, 0}
+                    move[5] = {38841, 39092 ,MASH, 0,BUTTON2}
+                    move[6] = {39092, 39339 ,MASH, 0,BUTTON3}
+                    move[7] = {39342, 40299 ,SKIP , 0}
+                    move[8] = {40415, 40429 ,ACT3RIGHT, 0}
+                    move[9] = {40489, 40565 ,RUNMAX, 0}
+                    move[10] = {40769, 40950 ,RUNMAX, 0}
+                    move[11] = {41000, 41015 ,BUTTON2, 0}
+                    move[12] = {41076, 41091 ,LOOPLHCC, 0}
+                    move[13] = {41209, 41230 ,MULTI, 0,"B2,B2,B2"}
+                    move[14] = {41338, 41431 ,HOLDUP, 0}
+                    move[15] = {41451, 41474 ,HOLDUP, 0 }
+                     move[16] = {41496, 41516 ,HOLDUP, 0 }
+                    move[17] = {42060, 42182 ,MASH2MAX, 0}
+
+               end
+											
+	  
+                  elseif thisLevel == 6 then
+
+						
+		
+		if thisScene == 1 then   										
+
+			sceneStart =1184
+			sceneEnd   =3121
+			totalMoves   = 1
+
+                     move[1] = {1194, 1760 , 0} 
+                 
+
+                 end
+
+	end
+	
+end
+
+
